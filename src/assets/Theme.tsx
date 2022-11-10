@@ -1,18 +1,24 @@
 import { createTheme } from "@mui/material";
 
+const primaryColor = '#042239';
+const primaryLight = '#1d8fb1';
+const backDrop = '#F5F4F6';
+
 const solarisTheme = createTheme({
     palette: {
       primary: {
-        main: '#84BD00',
-        dark: '#00843D',
+        main: primaryColor,
+        dark: primaryLight,
         contrastText: '#fff',
       },
       secondary: {
-        main: '#00A3E0',
+        main: primaryLight,
         dark: '#0033A0',
         contrastText: '#000',
       },
     },
   });
 
-  export default solarisTheme;
+
+
+  export {solarisTheme, primaryColor, primaryLight, backDrop};

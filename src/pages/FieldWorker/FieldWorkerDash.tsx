@@ -30,15 +30,12 @@ import CustomAppBar from "../../components/CustomAppBar";
 import {solarisTheme} from "../../assets/Theme";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DashLayout from "./DashLayout";
-import Reports from "./subpages/Reports";
-import FieldWorkers from "./subpages/FieldWorkers";
+import Readings from "./subpages/Reading";
 import Customers from "./subpages/Customers";
-import Meters from "./subpages/Meters";
-import Bills from "./subpages/Bills";
 
 
 
-class AdminDash extends Component {
+class FieldWorkerDash extends Component {
 
 
   render() {
@@ -47,11 +44,8 @@ class AdminDash extends Component {
           <BrowserRouter>
           <Routes>
             <Route path="/" element={<DashLayout/>}>
-              <Route index element={<Reports/>}/>
-              <Route path="field-workers" element={<FieldWorkers/>}/>
+              <Route index element={<Readings/>}/>
               <Route path="customers" element={<Customers/>}/>
-              <Route path="meters" element={<Meters/>}/>
-              <Route path="bills" element={<Bills/>}/>
             </Route>
           </Routes>
           </BrowserRouter>
@@ -60,4 +54,4 @@ class AdminDash extends Component {
   }
 }
 
-export default AdminDash;
+export default FieldWorkerDash;

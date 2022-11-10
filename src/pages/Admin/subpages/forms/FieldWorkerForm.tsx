@@ -19,6 +19,7 @@ type FieldWorkerFormProps = {
   editMode: boolean;
   fw : any ;
   snackbarCallback : Function;
+  closeModalCallback : Function;
 };
 type FieldWorkerFormState = {
   name : string;
@@ -45,7 +46,14 @@ class FieldWorkerForm extends Component<FieldWorkerFormProps,FieldWorkerFormStat
 
   handleSubmit = (event : any) => {
     event.preventDefault();
-    this.props.snackbarCallback(true,'Saved Field Worker')
+    this.props.snackbarCallback(true,'Saved Field Worker');
+    this.props.closeModalCallback();
+    let values = {
+      name : this.state.name,
+      email : this.state.email,
+      customers : this.state.customers.map((c:any)=>{return c.id})
+    }
+    console.log(values);
   }
 
   onCustomersChange = (event : any, values : any) => {
@@ -58,7 +66,6 @@ class FieldWorkerForm extends Component<FieldWorkerFormProps,FieldWorkerFormStat
       <Box sx={{ mt: 3 }}>
         <Stack spacing={2}>
           <TextField
-            id="filled-basic"
             label="Name"
             variant="outlined"
             size="small"
@@ -67,7 +74,6 @@ class FieldWorkerForm extends Component<FieldWorkerFormProps,FieldWorkerFormStat
           />
 
           <TextField
-            id="filled-basic"
             type="email"
             label="Email"
             variant="outlined"

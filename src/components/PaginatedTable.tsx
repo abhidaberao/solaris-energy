@@ -116,7 +116,7 @@ export default function PaginatedTable(props : any) {
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row: any) => (
-            <Row row={row} fields={fields} id={row[props.idKey]} editModalToggle={props.editModalToggle}/>
+            <Row row={row} fields={fields} id={row[props.idKey]} openDeleteModal={props.openDeleteModal} openFormModal={props.openFormModal}/>
           ))}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
@@ -186,12 +186,15 @@ function Row(props:any) {
                 </Box>
                 <Box>
                 <Stack direction='row'>
-                  <IconButton onClick={()=>{props.editModalToggle('edit',props.id)}}>
+
+                  <IconButton onClick={()=>{props.openFormModal('edit',props.id)}}>
                     <EditTwoTone/>
                   </IconButton>
-                <IconButton>
+
+                <IconButton onClick={()=>{props.openDeleteModal(props.id)}}>
                   <DeleteTwoTone/>
                 </IconButton>
+
               </Stack>
                 </Box>
               </Stack>

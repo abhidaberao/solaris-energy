@@ -41,7 +41,7 @@ class DashLayout extends Component{
               backgroundColor: backDrop,
             }}
           >
-            <CustomAppBar title={"Admin Dash"/*pageTitles[this.state.pageIndex]*/} />
+            <CustomAppBar title={"User Dash"/*pageTitles[this.state.pageIndex]*/} />
 
             <WrappedDrawer variant="permanent" open={this.state.drawerOpen}>
               <Toolbar variant="dense"

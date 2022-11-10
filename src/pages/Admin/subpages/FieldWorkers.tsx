@@ -40,21 +40,30 @@ const rows = fieldworkers.map((fw) => {
 
 class FieldWorkers extends Component {
   state = {
-    formOpen: false,
+    isFormModalOpen: false,
+    isDeleteModalOpen : false,
     editMode: false,
     editId: null,
     snackbarOpen: false,
     SnackbarMessage: "",
   };
 
-  handleOpen = (mode: string, id: any) =>
+  openFormModal = (mode: string, id: any) =>
     this.setState({
-      formOpen: true,
+      isFormModalOpen: true,
       editMode: mode == "edit" ? true : false,
       editId: id,
     });
 
-  handleClose = () => this.setState({ formOpen: false });
+  openDeleteModal = (id: any) =>
+  this.setState({
+    isDeleteModalOpen: true,
+    editId: id,
+  });
+
+  closeFormModal = () => this.setState({ isFormModalOpen: false });
+  closeDeleteModal = () => this.setState({ isDeleteModalOpen: false });
+
 
   toggleSnackbar = (show: boolean, message: string) => {
     this.setState({
@@ -64,12 +73,14 @@ class FieldWorkers extends Component {
   };
 
   snackbarClose = (event: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
 
     this.toggleSnackbar(false, "");
   };
+
+  handleDelete = (id : number) => {
+    this.toggleSnackbar(true,"Deleted");
+    this.closeDeleteModal();
+  }
 
   render(): ReactNode {
     let id = this.state.editId;
@@ -77,15 +88,31 @@ class FieldWorkers extends Component {
     return (
       <div>
         <CustomModal
-          open={this.state.formOpen}
+          open={this.state.isFormModalOpen}
           title={(this.state.editMode ? "Edit" : "Create") + " Field Worker"}
-          closeCallback={this.handleClose}
+          closeCallback={this.closeFormModal}
           content={
             <FieldWorkerForm
               editMode={this.state.editMode}
               fw={id != null ? fieldworkers.find((fw) => fw.id === id) : null}
               snackbarCallback = {this.toggleSnackbar}
+              closeModalCallback = {this.closeFormModal}
             />
+          }
+        />
+        <CustomModal
+          open={this.state.isDeleteModalOpen}
+          title={`Delete ${id != null ? fieldworkers.find((fw) => fw.id === id)?.name : ""} ?`}
+          closeCallback={this.closeDeleteModal}
+          content={
+            <Stack spacing={4} pt={5} pb={5} direction="row" justifyContent="space-between">
+              <Button variant="outlined" onClick={()=>{this.closeDeleteModal()}}>
+                No
+              </Button>
+              <Button color='error' variant="outlined" onClick={()=>{this.handleDelete(id!=null?id:0)}}>
+                Yes
+              </Button>
+            </Stack>
           }
         />
 
@@ -111,7 +138,7 @@ class FieldWorkers extends Component {
             <Button
               variant="contained"
               onClick={() => {
-                this.handleOpen("create", null);
+                this.openFormModal("create", null);
               }}
             >
               New
@@ -123,7 +150,8 @@ class FieldWorkers extends Component {
               fields={fields}
               rows={rows}
               idKey={fields[0]}
-              editModalToggle={this.handleOpen}
+              openFormModal={this.openFormModal}
+              openDeleteModal={this.openDeleteModal}
             />
           </Box>
         </Box>
